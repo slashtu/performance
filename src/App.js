@@ -1,9 +1,22 @@
 import React from 'react'
+import L from 'react-loadable';
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
+
+import Loading from './Loading';
+
+const AsyncHome = L({
+  loader: () => import('./Home'),
+  loading: Loading,
+})
+
+const AsyncAbout = L({
+  loader: () => import('./About'),
+  loading: Loading,
+})
 
 const BasicExample = () => (
   <Router>
@@ -16,23 +29,11 @@ const BasicExample = () => (
 
       <hr/>
 
-      <Route exact path="/" component={Home}/>
-      <Route path="/about" component={About}/>
+      <Route exact path="/" component={AsyncHome}/>
+      <Route path="/about" component={AsyncAbout}/>
       <Route path="/topics" component={Topics}/>
     </div>
   </Router>
-)
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
 )
 
 const Topics = ({ match }) => (

@@ -27,7 +27,7 @@ module.exports = {
                 ['es2015', { modules: false }]
             ],
             plugins: [
-            //   'syntax-dynamic-import',
+              'syntax-dynamic-import',
             //   'transform-class-properties',
             //   'transform-object-assign',
             //   require.resolve('./babel'),
