@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-// const { ReactLoadablePlugin } = require('./webpack');
+import { ReactLoadablePlugin } from 'react-loadable/webpack';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     main: './src/index',
   },
   output: {
-    path: path.join(__dirname, 'public', 'dist'),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js',
     chunkFilename: '[name].js',
     publicPath: '/dist/'
@@ -28,9 +28,8 @@ module.exports = {
             ],
             plugins: [
               'syntax-dynamic-import',
-            //   'transform-class-properties',
-            //   'transform-object-assign',
-            //   require.resolve('./babel'),
+              'transform-class-properties',
+              'react-loadable/babel'
             ],
           }
         },
@@ -44,12 +43,12 @@ module.exports = {
     // },
   },
   plugins: [
-    // new ReactLoadablePlugin({
-    //   filename:  path.resolve(__dirname, 'example', 'dist', 'react-loadable.json'),
-    // }),
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify('production')
-    // }),
-    new BundleAnalyzerPlugin()
+    new ReactLoadablePlugin({
+      filename:  path.resolve(__dirname, 'dist', 'react-loadable.json'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    // new BundleAnalyzerPlugin()
   ]
 };
