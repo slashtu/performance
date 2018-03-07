@@ -2,18 +2,51 @@ import express from 'express';
 import path from 'path';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { StaticRouter as Router, Route, Link } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack'
 import App from '../App';
+import Loading from '../loadable/Loading';
 
 const stats = require('../../dist/react-loadable.json');
 const app = express();
 
-app.get('/', (req, res) => {
+app.use('/dist', express.static('dist'));
+
+const AsyncHome = Loadable({
+  loader: () => import('../loadable/Home'),
+  loading: Loading,
+})
+
+const AsyncAbout = Loadable({
+  loader: () => import('../loadable/About'),
+  loading: Loading,
+})
+
+app.get('*', (req, res) => {
   let modules = [];
+  // let html = ReactDOMServer.renderToString(
+  //   <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+  //     <App/>
+  //   </Loadable.Capture>
+  // );
+  const context = {};
+
   let html = ReactDOMServer.renderToString(
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-      <App/>
+      <Router location={req.url} context={context}>
+        <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
+
+        <hr/>
+
+        <Route exact path="/" component={AsyncHome}/>
+        <Route path="/about" component={AsyncAbout}/>
+      </div>
+      </Router>
     </Loadable.Capture>
   );
 
@@ -45,8 +78,6 @@ app.get('/', (req, res) => {
     </html>
   `);
 });
-
-app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
 Loadable.preloadAll().then(() => {
   app.listen(3000, () => {
