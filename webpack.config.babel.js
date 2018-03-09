@@ -49,6 +49,14 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+
+      name: "main",
+      async: "common",
+			minChunks: 2,
+			children: true,
+			deepChildren: true,
+    }),
     // new BundleAnalyzerPlugin()
   ]
 };

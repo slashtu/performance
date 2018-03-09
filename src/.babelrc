@@ -4,7 +4,8 @@
       "react"
     ],
     "plugins": [
-      "dynamic-import-node"
+      "dynamic-import-node",
+      "react-loadable/babel"
     ]
 }
   

@@ -4,24 +4,15 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter as Router, Route, Link } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import { getBundles } from 'react-loadable/webpack'
-import App from '../App';
+import { getBundles } from 'react-loadable/webpack';
+
+import Routes from '../routes';
 import Loading from '../loadable/Loading';
 
 const stats = require('../../dist/react-loadable.json');
 const app = express();
 
 app.use('/dist', express.static('dist'));
-
-const AsyncHome = Loadable({
-  loader: () => import('../loadable/Home'),
-  loading: Loading,
-})
-
-const AsyncAbout = Loadable({
-  loader: () => import('../loadable/About'),
-  loading: Loading,
-})
 
 app.get('*', (req, res) => {
   let modules = [];
@@ -36,21 +27,15 @@ app.get('*', (req, res) => {
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
       <Router location={req.url} context={context}>
         <div>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
-
-        <hr/>
-
-        <Route exact path="/" component={AsyncHome}/>
-        <Route path="/about" component={AsyncAbout}/>
-      </div>
+          <Routes />
+        </div>
       </Router>
     </Loadable.Capture>
   );
-
+  console.log(modules);
   let bundles = getBundles(stats, modules);
+
+  console.log(bundles);
 
   let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
   let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
