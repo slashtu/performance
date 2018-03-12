@@ -5,13 +5,13 @@ import Loading from '../loadable/Loading';
 
 const AsyncHome = Loadable({
   loader: () => import('../loadable/Home'),
-  loading: Loading,
-})
+  loading: Loading
+});
 
 const AsyncAbout = Loadable({
   loader: () => import('../loadable/About'),
-  loading: Loading,
-})
+  loading: Loading
+});
 
 const Routes = () => (
     <div>
