@@ -15,9 +15,7 @@ const renderer = () => (req, res) => {
   const html = ReactDOMServer.renderToString( // eslint-disable-line function-paren-newline
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
       <Router location={req.url} context={context}>
-        <div>
-          <Routes />
-        </div>
+        <Routes />
       </Router>
     </Loadable.Capture>);
 
