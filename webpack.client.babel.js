@@ -58,7 +58,7 @@ module.exports = {
     }),
     new ManifestPlugin({
       fileName: path.resolve(__dirname, 'webpack-assets.json')
-    })
-    // new BundleAnalyzerPlugin()
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin()
   ]
 };
