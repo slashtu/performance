@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import ManifestPlugin from 'webpack-manifest-plugin';
 import {ReactLoadablePlugin} from 'react-loadable/webpack';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
@@ -38,11 +39,11 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
     new ReactLoadablePlugin({
       filename: path.resolve(__dirname, 'dist', 'react-loadable.json')
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'main',
@@ -54,6 +55,9 @@ module.exports = {
         console.log(count);
         return count > 1;
       }
+    }),
+    new ManifestPlugin({
+      fileName: path.resolve(__dirname, 'webpack-assets.json')
     })
     // new BundleAnalyzerPlugin()
   ]

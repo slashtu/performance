@@ -1,0 +1,10 @@
+{
+  "common.js": "/dist/common.js",
+  "common.js.map": "/dist/common.js.map",
+  "1.js": "/dist/1.js",
+  "1.js.map": "/dist/1.js.map",
+  "2.js": "/dist/2.js",
+  "2.js.map": "/dist/2.js.map",
+  "main.js": "/dist/main.js",
+  "main.js.map": "/dist/main.js.map"
+}
