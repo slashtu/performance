@@ -9,6 +9,7 @@ import Routes from '../../routes';
 const stats = require('../../../dist/react-loadable.json');
 
 const renderer = () => (req, res) => {
+  console.log('new req', req);
   const modules = [];
   const context = {};
 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function Loading(props) {
+  console.log(props);
   if (props.isLoading) {
     if (props.timedOut) {
       return <div>Loader timed out!</div>;
