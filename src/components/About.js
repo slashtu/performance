@@ -1,5 +1,5 @@
 // import l from 'lodash';
-import React from 'react';
+import React, {Component} from 'react';
 import Loadable from 'react-loadable';
 import 'isomorphic-fetch';
 
@@ -12,13 +12,20 @@ const AsyncFetchDataComponent = Loadable({
   loading: Loading
 });
 
-const About = () => (
-  <div>
-    <h2>About</h2>
-    <img alt="gg" src={image} />
-    <Another />
-    <AsyncFetchDataComponent desc="fetching data" />
-  </div>
-);
+class About extends Component {
+  componentWillMount() {
+    console.log('XXXXXXXXXXXXXXXXXXXXXX componentWillMount');
+  }
+  render() {
+    return (
+      <div>
+        <h2>About</h2>
+        <img alt="gg" src={image} />
+        <Another />
+        <AsyncFetchDataComponent desc="fetching data" />
+      </div>
+    );
+  }
+}
 
 export default About;
