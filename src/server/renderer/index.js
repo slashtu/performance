@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import {StaticRouter as Router} from 'react-router-dom';
+import {StaticRouter as Router, matchPath} from 'react-router-dom';
 import Loadable from 'react-loadable';
 import {getBundles} from 'react-loadable/webpack';
 
@@ -18,14 +18,18 @@ const renderer = () => (req, res) => {
         <Routes />
       </Router>
     </Loadable.Capture>);
-
-  console.log(modules);
   const bundles = getBundles(stats, modules);
 
-  console.log(bundles);
-
   const styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
-  const scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
+  const components = bundles.filter(bundle => bundle.file.endsWith('.js'));
+
+  // fetch data
+  // components.forEach((c) => {
+  //   const path = '../../' + c.name.replace('./', '');
+  //   console.log(path);
+  //   const component = require(path).default;
+  //   console.log('XXXXXXXXXXXX', component);
+  // });
 
   res.send(`
     <!doctype html>
@@ -40,7 +44,7 @@ const renderer = () => (req, res) => {
       <body>
         <div id="app">${html}</div>
         <script src="/dist/main.js"></script>
-        ${scripts.map(script => `<script src="/dist/${script.file}"></script>`).join('\n')}
+        ${components.map(script => `<script src="/dist/${script.file}"></script>`).join('\n')}
         <script>window.main();</script>
       </body>
     </html>
