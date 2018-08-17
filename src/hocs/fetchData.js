@@ -1,27 +1,22 @@
-// import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-// export default () => {
-//   return class WrappedComponent extends Component {
-//     static async getInitialProps (context) {
-//       let props
-//       if (typeof Page.getInitialProps === 'function') {
-//         props = await Page.getInitialProps(context)
-//       }
+const fetchData = fetch => {
+  return WrappedComponent => {
+    class DataLoader extends Component {
+      static contextTypes = {
+        fetchQueue: PropTypes.array
+      };
+      componentWillMount() {
+        console.log('XXXXXXXXXXXXXXXXXXXXX', __SERVER__);
+        this.context.fetchQueue.push(fetch());
+      }
+      render() {
+        return <WrappedComponent {...this.props} />;
+      }
+    }
+    return DataLoader;
+  };
+};
 
-//       // Always update the current time on page load/transition because the
-//       // <IntlProvider> will be a new instance even with pushState routing.
-//       const now = Date.now()
-
-//       return {...props, locale, messages, now}
-//     }
-
-//     render () {
-//       const {locale, messages, now, ...props} = this.props
-//       return (
-//         <IntlProvider locale={locale} messages={messages} initialNow={now}>
-//           <IntlPage {...props} />
-//         </IntlProvider>
-//       )
-//     }
-//   }
-// }
+export default fetchData;

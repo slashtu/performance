@@ -1,8 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
-import ManifestPlugin from 'webpack-manifest-plugin';
-import {ReactLoadablePlugin} from 'react-loadable/webpack';
-import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
+import { ReactLoadablePlugin } from 'react-loadable/webpack';
 
 module.exports = {
   entry: {
@@ -23,12 +21,10 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             babelrc: false,
-            presets: [
-              'react',
-              ['es2015', {modules: false}]
-            ],
+            presets: ['react', ['es2015', { modules: false }]],
             plugins: [
               'syntax-dynamic-import',
+              'transform-decorators-legacy',
               'transform-class-properties',
               'react-loadable/babel'
             ]
@@ -51,7 +47,9 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      __SERVER__: JSON.stringify(false),
+      __CLIENT__: JSON.stringify(true)
     }),
     new ReactLoadablePlugin({
       filename: path.resolve(__dirname, 'dist', 'react-loadable.json')
@@ -66,10 +64,6 @@ module.exports = {
         console.log(count);
         return count > 1;
       }
-    }),
-    new ManifestPlugin({
-      fileName: path.resolve(__dirname, 'webpack-assets.json')
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin()
+    })
   ]
 };
