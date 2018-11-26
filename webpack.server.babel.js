@@ -2,10 +2,6 @@ import webpack from 'webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
-const a = {name: 'slash'};
-
-console.log({...a});
-
 module.exports = {
   target: 'node',
   entry: {
@@ -23,7 +19,8 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+
         }
       },
       {
