@@ -20,7 +20,16 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-
+          options: {
+            babelrc: false,
+            presets: ['react', ['es2015', { modules: false }]],
+            plugins: [
+              'syntax-dynamic-import',
+              'transform-decorators-legacy',
+              'transform-class-properties',
+              'react-loadable/babel'
+            ]
+          }
         }
       },
       {
@@ -53,5 +62,5 @@ module.exports = {
       reducers: path.resolve(__dirname, '', 'src/store/reducers')
       
     }
-  },
+  }
 };
