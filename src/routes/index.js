@@ -20,29 +20,18 @@ class Routes extends Component {
     store: PropTypes.object
   };
 
-  static childContextTypes = {
-    fetchQueue: PropTypes.array,
-    store: PropTypes.object
-  };
-
-  getChildContext() {
-    return {
-      fetchQueue: this.props.fetchQueue,
-      store: this.props.store
-    };
-  }
-
   render() {
+    console.log('XXXXXXX', this.props);
     return (
-      <div>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
-        <hr />
-        <Route exact path="/" component={AsyncHome} />
-        <Route path="/about" component={AsyncAbout} />
-      </div>
+        <div>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+          </ul>
+          <hr />
+          <Route exact path="/" component={AsyncHome} />
+          <Route path="/about" component={AsyncAbout} />
+        </div>
     );
   }
 }

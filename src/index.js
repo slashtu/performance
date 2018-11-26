@@ -8,7 +8,7 @@ window.main = () => {
   Loadable.preloadReady().then(() => {
     ReactDOM.hydrate(
       <Router>
-        <Routes />
+        <Routes store={window.__STORE__}/>
       </Router>,
       document.getElementById('app')
     );

@@ -2,6 +2,10 @@ import webpack from 'webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
+const a = {name: 'slash'};
+
+console.log({...a});
+
 module.exports = {
   target: 'node',
   entry: {
@@ -19,17 +23,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            presets: ['react', ['es2015', { modules: false }]],
-            plugins: [
-              'syntax-dynamic-import',
-              'transform-decorators-legacy',
-              'transform-class-properties',
-              'react-loadable/babel'
-            ]
-          }
+          loader: 'babel-loader'
         }
       },
       {
@@ -54,5 +48,13 @@ module.exports = {
       __CLIENT__: JSON.stringify(false)
     }),
     new webpack.optimize.ModuleConcatenationPlugin()
-  ]
+  ],
+  resolve: {
+    alias: {
+      dist: path.resolve(__dirname, '', 'dist/'),
+      store: path.resolve(__dirname, '', 'src/store/'),
+      reducers: path.resolve(__dirname, '', 'src/store/reducers')
+      
+    }
+  },
 };

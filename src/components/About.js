@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import Loadable from 'react-loadable';
 
-import Another from './Another';
 import Loading from './Loading';
 import image from '../assets/SpongeBob.jpg';
 
@@ -17,7 +16,6 @@ class About extends Component {
       <div>
         <h2>About</h2>
         <img alt="gg" src={image} />
-        <Another />
         <AsyncFetchDataComponent albums="albums" />
       </div>
     );
