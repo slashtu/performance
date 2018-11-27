@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 const fetchData = fetch => {
   return WrappedComponent => {
     class DataLoader extends Component {
-      static contextType = StoreContext;
       componentWillMount() {
         console.log('XXXXXXXXXXXXXXXXXXXXX', __SERVER__);
         console.log('context', this.context);

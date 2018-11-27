@@ -23,6 +23,7 @@ module.exports = {
             babelrc: false,
             presets: ['react', ['es2015', { modules: false }]],
             plugins: [
+              'transform-object-rest-spread',
               'syntax-dynamic-import',
               'transform-decorators-legacy',
               'transform-class-properties',
