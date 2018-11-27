@@ -60,8 +60,8 @@ module.exports = {
     alias: {
       dist: path.resolve(__dirname, '', 'dist/'),
       store: path.resolve(__dirname, '', 'src/store/'),
-      reducers: path.resolve(__dirname, '', 'src/store/reducers')
-      
+      reducers: path.resolve(__dirname, '', 'src/store/reducers'),
+      hocs: path.resolve(__dirname, '', 'src/hocs/')
     }
   }
 };

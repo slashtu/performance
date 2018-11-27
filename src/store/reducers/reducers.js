@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 
-import config from 'reducers/config';
+import dataFetch from 'reducers/dataFetch';
 import adoptions from 'reducers/adoptions';
 
 const reducers = {
-  config,
+  dataFetch,
   adoptions
 };
 

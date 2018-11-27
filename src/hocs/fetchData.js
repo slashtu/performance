@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { push } from 'reducers/dataFetch';
+
+const mapStateToProps = (state) => {
+  const isDataFetchEnabled = state.dataFetch.isDataFetchEnabled;
+  return { isDataFetchEnabled };
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    push: bindActionCreators(push, dispatch)
+  };
+};
 
 const fetchData = fetch => {
   return WrappedComponent => {
     class DataLoader extends Component {
       componentWillMount() {
-        console.log('XXXXXXXXXXXXXXXXXXXXX', __SERVER__);
-        console.log('context', this.context);
+        const {dispatch, isDataFetchEnabled, push} = this.props;
+
         if (__SERVER__) {
-          // this.context.fetchQueue.push(fetch());
-        } else {
-          fetch().then(r => {
-            console.log(r);
-          })
+          push(fetch({ dispatch }));
+        } else if (isDataFetchEnabled){
+          fetch({ dispatch });
         }
       }
       render() {
         return <WrappedComponent {...this.props} />;
       }
     }
-    return DataLoader;
+    return connect(mapStateToProps, mapDispatchToProps)(DataLoader);
   };
 };
 

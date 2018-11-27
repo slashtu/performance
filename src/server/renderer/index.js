@@ -13,11 +13,9 @@ import stats from 'dist/react-loadable.json';
 const renderer = () => (req, res) => {
   const modules = [];
   const context = {};
-  const queue = [];
   const store = createStore();
 
   // pre-render for async data fetching
-  console.log('first time')
   ReactDOMServer.renderToString(
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
       <Provider store={store}>
@@ -27,14 +25,17 @@ const renderer = () => (req, res) => {
       </Provider>
     </Loadable.Capture>
   );
-  console.log('promiseall')
-  Promise.all(queue)
+
+  const state = store.getState();
+  const promises = state.dataFetch && state.dataFetch.promises;
+
+  Promise.all(promises)
     .then(() => {
       const bundles = getBundles(stats, modules);
 
       const styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
       const components = bundles.filter(bundle => bundle.file.endsWith('.js'));
-      console.log('SSR')
+
       const html = ReactDOMServer.renderToString(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
           <Provider store={store}>
@@ -56,6 +57,8 @@ const renderer = () => (req, res) => {
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>My App</title>
             ${styles.map(style => `<link href="/dist/${style.file}" rel="stylesheet"/>`).join('\n')}
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
           </head>
           <body>
             <div id="app">${html}</div>

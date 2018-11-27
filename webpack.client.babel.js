@@ -4,7 +4,7 @@ import { ReactLoadablePlugin } from 'react-loadable/webpack';
 
 module.exports = {
   entry: {
-    main: './src/index'
+    main: './src/client'
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -66,5 +66,12 @@ module.exports = {
         return count > 1;
       }
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      store: path.resolve(__dirname, '', 'src/store/'),
+      reducers: path.resolve(__dirname, '', 'src/store/reducers'),
+      hocs: path.resolve(__dirname, '', 'src/hocs/')
+    }
+  }
 };

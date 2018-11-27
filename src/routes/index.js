@@ -9,8 +9,8 @@ const AsyncHome = Loadable({
   loading: Loading
 });
 
-const AsyncAbout = Loadable({
-  loader: () => import('../components/About'),
+const AsyncAdoptions = Loadable({
+  loader: () => import('../components/Adoptions'),
   loading: Loading
 });
 
@@ -21,16 +21,16 @@ class Routes extends Component {
   };
 
   render() {
-    console.log('XXXXXXX', this.props);
     return (
-        <div>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-          </ul>
-          <hr />
+        <div className="container">
+          <header className="navbar navbar-expand-lg navbar-light bg-light">
+            <ul className="nav">
+              <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
+              <li className="nav-item"><Link className="nav-link" to="/adoptions">Adoptions</Link></li>
+            </ul>
+          </header>
           <Route exact path="/" component={AsyncHome} />
-          <Route path="/about" component={AsyncAbout} />
+          <Route path="/adoptions" component={AsyncAdoptions} />
         </div>
     );
   }
